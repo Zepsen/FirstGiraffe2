@@ -54,13 +54,14 @@ let configureApp (app : IApplicationBuilder) =
         .UseGiraffe(webApp)
 
 let configureServices (services : IServiceCollection) =
-    let mongo = MongoClient (Environment.GetEnvironmentVariable "mongodb://localhost:27017/")
-    let db = mongo.GetDatabase "todos"
+    let mongo = MongoClient ("mongodb://localhost:27017/")
+    let db = mongo.GetDatabase "todos"  
+    let collection = db.GetCollection<Todo>("todos")
 
     services.AddCors()    |> ignore
     services.AddGiraffe() |> ignore
-    services.AddMongoRepo(db.GetCollection<Todo>("todos")) |> ignore
-
+    services.AddMongoRepo(collection) |> ignore
+    
 let configureLogging (builder : ILoggingBuilder) =
     builder.AddConsole()
            .AddDebug() |> ignore

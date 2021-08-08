@@ -10,14 +10,16 @@ module HttpHandlers =
     let handleTodo: HttpFunc -> HttpContext -> HttpFuncResult =
         choose [ POST
                  >=> route "/todos"
-                 >=> fun next context -> text "Create" next context
+                 >=> fun next context ->
+                         let service = context.GetService<TodoSave>()
+                         let todo = service "1"
+                         json todo next context
 
                  GET
-                 >=> routef 
+                 >=> routef
                          "/todos/%s"
                          (fun id ->
                              fun next context ->
-                                 let service = context.GetService<TodoService>()
+                                 let service = context.GetService<TodoFind>()
                                  let todos = service id
-                                 json todos next context
-                             ) ]
+                                 json todos next context) ]
