@@ -1,7 +1,6 @@
 namespace FirstGiraffe
 
 module FirstService =
-    open System
     open FirstGiraffe.Models
     open MongoDB.Driver
     open Microsoft.Extensions.DependencyInjection
@@ -13,12 +12,7 @@ module FirstService =
         |> Seq.toArray
 
 
-    let save (collection: IMongoCollection<Todo>) (id: string) : Todo =
-        let todo =
-            { Id = Guid.NewGuid().ToString()
-              Text = "Text"
-              Done = true }
-
+    let save (collection: IMongoCollection<Todo>) (todo: Todo) : Todo =
         collection.InsertOne todo
         todo
 

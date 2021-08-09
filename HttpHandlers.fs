@@ -1,7 +1,9 @@
+
+
 namespace FirstGiraffe
 
 module HttpHandlers =
-
+    open System
     open Microsoft.AspNetCore.Http
     open FSharp.Control.Tasks
     open Giraffe
@@ -11,9 +13,12 @@ module HttpHandlers =
         choose [ POST
                  >=> route "/todos"
                  >=> fun next context ->
-                         let service = context.GetService<TodoSave>()
-                         let todo = service "1"
-                         json todo next context
+                        task {
+                            let service = context.GetService<TodoSave>()
+                            let! todo = context.BindJsonAsync<Todo>()
+                            let todo = { todo with Id = ShortGuid.fromGuid(Guid.NewGuid())}
+                            return! json (service todo) next context
+                        }
 
                  GET
                  >=> routef

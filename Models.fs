@@ -6,4 +6,4 @@ type Todo =
       Done: bool }
 
 type TodoFind = string -> Todo []
-type TodoSave = string -> Todo
+type TodoSave = Todo -> Todo
