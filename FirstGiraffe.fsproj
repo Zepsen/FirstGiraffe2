@@ -9,6 +9,7 @@
     <PackageReference Include="Ply" Version="0.3.*"/>
     <PackageReference Include="MongoDB.FSharp" Version="*"/>
     <PackageReference Include="MongoDB.Driver" Version="2.13.1"/>
+    <PackageReference Include="FSharp.Core" Version="5.0.2"/>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models.fs"/>
